@@ -1,0 +1,20 @@
+create table Author(Author_Email_Address varchar(30),FirstName varchar(20),LastName varchar(20),primary key(Author_Email_Address));
+//insert into Author values('198w1a05f5@vrsiddhartha.ac.in','Yashwanth','Kanaparthi');
+
+create table Paper(Id int,Title varchar(40),Abstract varchar(40),Filename varchar(40),Author_Email_Address varchar(40),foreign key(Author_Email_Address) references Author(Author_Email_Address),primary key(Id));
+//insert into Paper values(9999,'Tracker and tracer','Loaction Tracer','smartlocation.pdf','198w1a05e3@vrsiddhartha.ac.in');
+
+create table submit(Submission_Date date, Author_Email_Address varchar(40),Id int,foreign key(Author_Email_Address) references Author(Author_Email_Address),foreign key (Id) references Paper(Id));
+//insert into submit values (date '2021-11-17','198w1a05e3@vrsiddhartha.ac.in',1234);
+
+create table Topic (TopicName varchar(40) ,primary key(TopicName));
+//insert into Topic values ('Artificial intelligence');
+
+create table Reviewer (Reviewer_Email_Address varchar(40),Feedback varchar(200),FirstName varchar(30),LastName varchar(30),Phone_Number numeric(10),Affiliation varchar(30),TopicName varchar(40),primary key (Reviewer_Email_Address), foreign key (TopicName) references Topic(TopicName));
+//insert into Reviewer values('reviewer1@gmail.com','Need to be improved','reviewer1','R',7671097479,'professor','Artificial intelligence1');
+
+create table Review(Paper_ID int,Recomendation varchar(100),Average_Score int,Technical_Merit int,Readibility int,Originality int,Relevance int,Reviewer_Email_Address varchar(30),primary key(Paper_ID),foreign key(Reviewer_Email_Address) references Reviewer(Reviewer_Email_Address));
+//insert into Review values(9999,'No Recomendations',10,10,10,10,10,'reviewer1@gmail.com');
+
+create table Assigned(Id int,Reviewer_Email_Address varchar(40),foreign key(Id) references Paper(Id),foreign key(Reviewer_Email_Address) references Reviewer(Reviewer_Email_Address));
+// insert into Assigned values(9999,'reviewer5@gmail.com');

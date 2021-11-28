@@ -1,0 +1,463 @@
+Enter password: ****
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 15
+Server version: 8.0.27 MySQL Community Server - GPL
+
+Copyright (c) 2000, 2021, Oracle and/or its affiliates.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> show databases;
++--------------------+
+| Database           |
++--------------------+
+| information_schema |
+| mysql              |
+| performance_schema |
+| sys                |
+| user               |
++--------------------+
+5 rows in set (0.01 sec)
+
+mysql> create conference_review;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'conference_review' at line 1
+mysql> create database conference_review;
+Query OK, 1 row affected (0.01 sec)
+
+mysql> use conference_review;
+Database changed
+mysql> show tables;
+Empty set (0.01 sec)
+
+mysql> create table Author(Author_Email_Address varchar(30),FirstName varchar(20),LastName varchar(20),primary key(Author_Email_Address));
+Query OK, 0 rows affected (0.06 sec)
+
+mysql> select * from Author;
+Empty set (0.01 sec)
+
+mysql> insert into Author values('198w1a05e3@vrsiddhartha.ac.in','Greeshmanth','Penugonda');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> select * from Author;
++-------------------------------+-------------+-----------+
+| Author_Email_Address          | FirstName   | LastName  |
++-------------------------------+-------------+-----------+
+| 198w1a05e3@vrsiddhartha.ac.in | Greeshmanth | Penugonda |
++-------------------------------+-------------+-----------+
+1 row in set (0.00 sec)
+
+mysql> insert into Author values('198w1a05f2@vrsiddhartha.ac.in','Lokesh','Jasti');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into Author values('198w1a05f5@vrsiddhartha.ac.in','Yashwanth','Kanaparthi');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into Author values('198w1a05j1@vrsiddhartha.ac.in','Venkata sai','Vutukuri');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> select * from Author;
++-------------------------------+-------------+------------+
+| Author_Email_Address          | FirstName   | LastName   |
++-------------------------------+-------------+------------+
+| 198w1a05e3@vrsiddhartha.ac.in | Greeshmanth | Penugonda  |
+| 198w1a05f2@vrsiddhartha.ac.in | Lokesh      | Jasti      |
+| 198w1a05f5@vrsiddhartha.ac.in | Yashwanth   | Kanaparthi |
+| 198w1a05j1@vrsiddhartha.ac.in | Venkata sai | Vutukuri   |
++-------------------------------+-------------+------------+
+4 rows in set (0.00 sec)
+
+mysql> create table Paper(Id int,Title varchar(30),Abstract varchar(30),Filename varchar(20),Author_Email_Address varchar(20),foreign key(Author_Email_Address) references Author(Author_Email_Address),primary key(Id));
+Query OK, 0 rows affected (0.08 sec)
+
+mysql> insert into Paper(0111,'smart lock','security','smartlock.pdf','198w1a05f5@vrsiddhartha.ac.in');
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '0111,'smart lock','security','smartlock.pdf','198w1a05f5@vrsiddhartha.ac.in')' at line 1
+mysql> drop table Paper;
+Query OK, 0 rows affected (0.04 sec)
+
+mysql> create table Paper(Id int,Title varchar(30),Abstract varchar(30),Filename varchar(20),Author_Email_Address varchar(30),foreign key(Author_Email_Address) references Author(Author_Email_Address),primary key(Id));
+Query OK, 0 rows affected (0.06 sec)
+
+mysql> insert into Paper(0111,'smart lock','security','smartlock.pdf','198w1a05f5@vrsiddhartha.ac.in');
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '0111,'smart lock','security','smartlock.pdf','198w1a05f5@vrsiddhartha.ac.in')' at line 1
+mysql> insert into Paper(1234,'smart lock','security','smartlock.pdf','198w1a05f5@vrsiddhartha.ac.in');
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '1234,'smart lock','security','smartlock.pdf','198w1a05f5@vrsiddhartha.ac.in')' at line 1
+mysql> insert into Paper('1234','smart lock','security','smartlock.pdf','198w1a05f5@vrsiddhartha.ac.in');
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ''1234','smart lock','security','smartlock.pdf','198w1a05f5@vrsiddhartha.ac.in')' at line 1
+mysql> insert into Paper values(1234,'smart lock','security','smartlock.pdf','198w1a05f5@vrsiddhartha.ac.in');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> select * from Paper;
++------+------------+----------+---------------+-------------------------------+
+| Id   | Title      | Abstract | Filename      | Author_Email_Address          |
++------+------------+----------+---------------+-------------------------------+
+| 1234 | smart lock | security | smartlock.pdf | 198w1a05f5@vrsiddhartha.ac.in |
++------+------------+----------+---------------+-------------------------------+
+1 row in set (0.00 sec)
+
+mysql> insert into Paper values(1234,'wheather detection','information','wheatherdetection.pdf','198w1a05f2@vrsiddhartha.ac.in');
+ERROR 1406 (22001): Data too long for column 'Filename' at row 1
+mysql> drop table Paper;
+Query OK, 0 rows affected (0.05 sec)
+
+mysql> create table Paper(Id int,Title varchar(40),Abstract varchar(40),Filename varchar(40),Author_Email_Address varchar(40),foreign key(Author_Email_Address) references Author(Author_Email_Address),primary key(Id));
+Query OK, 0 rows affected (0.06 sec)
+
+mysql> insert into Paper(1234,'smart lock','security','smartlock.pdf','198w1a05f5@vrsiddhartha.ac.in');
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '1234,'smart lock','security','smartlock.pdf','198w1a05f5@vrsiddhartha.ac.in')' at line 1
+mysql> insert into Paper values(1234,'smart lock','security','smartlock.pdf','198w1a05f5@vrsiddhartha.ac.in');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into Paper values(1234,'wheather detection','information','wheatherdetection.pdf','198w1a05f2@vrsiddhartha.ac.in');
+ERROR 1062 (23000): Duplicate entry '1234' for key 'paper.PRIMARY'
+mysql> insert into Paper values(5678,'wheather detection','information','wheatherdetection.pdf','198w1a05f2@vrsiddhartha.ac.in');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into Paper values(5678,'wheather detection','information','wheatherdetection.pdf','198w1a05f2@vrsiddhartha.ac.in');
+ERROR 1062 (23000): Duplicate entry '5678' for key 'paper.PRIMARY'
+mysql> insert into Paper values(9999,'Tracker and tracer','Loaction Tracer','smartlocation.pdf','198w1a05e3@vrsiddhartha.ac.in');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into Paper values(9999,'Tracker and tracer','Loaction Tracer','smartlocation.pdf','198w1a05e3@vrsiddhartha.ac.in');
+ERROR 1062 (23000): Duplicate entry '9999' for key 'paper.PRIMARY'
+mysql> insert into Paper values(2345,'Color Detection','Detecting colors','colordetection.pdf','198w1a05j1@vrsiddhartha.ac.in');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> select * from paper;
++------+--------------------+------------------+-----------------------+-------------------------------+
+| Id   | Title              | Abstract         | Filename              | Author_Email_Address          |
++------+--------------------+------------------+-----------------------+-------------------------------+
+| 1234 | smart lock         | security         | smartlock.pdf         | 198w1a05f5@vrsiddhartha.ac.in |
+| 2345 | Color Detection    | Detecting colors | colordetection.pdf    | 198w1a05j1@vrsiddhartha.ac.in |
+| 5678 | wheather detection | information      | wheatherdetection.pdf | 198w1a05f2@vrsiddhartha.ac.in |
+| 9999 | Tracker and tracer | Loaction Tracer  | smartlocation.pdf     | 198w1a05e3@vrsiddhartha.ac.in |
++------+--------------------+------------------+-----------------------+-------------------------------+
+4 rows in set (0.00 sec)
+
+mysql> create table submit(Submission_Date date, Author_Email_Address varchar(40),Id int,foreign key(Author_Email_Address) references Author(Author_Email_Address),foreign key (Id) references Paper(Id));
+Query OK, 0 rows affected (0.09 sec)
+
+mysql> insert into submit values (TO_DATE('17/11/2021', 'DD/MM/YYYY'),'198w1a05f5@vrsiddhartha.ac.in',1234);
+ERROR 1305 (42000): FUNCTION conference_review.TO_DATE does not exist
+mysql> insert into submit values (date '2021-11-17','198w1a05f5@vrsiddhartha.ac.in',1234);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into submit values (date '17-11-2021','198w1a05f2@vrsiddhartha.ac.in',1234);
+ERROR 1525 (HY000): Incorrect DATE value: '17-11-2021'
+mysql> insert into submit values (date '2021-11-17','198w1a05f2@vrsiddhartha.ac.in',1234);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into submit values (date '2021-11-17','198w1a05e3@vrsiddhartha.ac.in',1234);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into submit values (date '2021-11-20','198w1a05e3@vrsiddhartha.ac.in',2345);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into submit values (date '2021-11-20','198w1a05j1@vrsiddhartha.ac.in',2345);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into submit values (date '2021-12-19','198w1a05f2@vrsiddhartha.ac.in',5678);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into submit values (date '2021-12-19','198w1a05j1@vrsiddhartha.ac.in',5678);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into submit values (date '2021-12-19','198w1a05f5@vrsiddhartha.ac.in',5678);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into submit values (date '2021-11-15','198w1a05e3@vrsiddhartha.ac.in',9999);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into submit values (date '2021-11-15','198w1a05f5@vrsiddhartha.ac.in',9999);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into submit values (date '2021-11-15','198w1a05f2@vrsiddhartha.ac.in',9999);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into submit values (date '2021-11-15','198w1a05j1@vrsiddhartha.ac.in',9999);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> select * from Submit;
++-----------------+-------------------------------+------+
+| Submission_Date | Author_Email_Address          | Id   |
++-----------------+-------------------------------+------+
+| 2021-11-17      | 198w1a05f5@vrsiddhartha.ac.in | 1234 |
+| 2021-11-17      | 198w1a05f2@vrsiddhartha.ac.in | 1234 |
+| 2021-11-17      | 198w1a05e3@vrsiddhartha.ac.in | 1234 |
+| 2021-11-20      | 198w1a05e3@vrsiddhartha.ac.in | 2345 |
+| 2021-11-20      | 198w1a05j1@vrsiddhartha.ac.in | 2345 |
+| 2021-12-19      | 198w1a05f2@vrsiddhartha.ac.in | 5678 |
+| 2021-12-19      | 198w1a05j1@vrsiddhartha.ac.in | 5678 |
+| 2021-12-19      | 198w1a05f5@vrsiddhartha.ac.in | 5678 |
+| 2021-11-15      | 198w1a05e3@vrsiddhartha.ac.in | 9999 |
+| 2021-11-15      | 198w1a05f5@vrsiddhartha.ac.in | 9999 |
+| 2021-11-15      | 198w1a05f2@vrsiddhartha.ac.in | 9999 |
+| 2021-11-15      | 198w1a05j1@vrsiddhartha.ac.in | 9999 |
++-----------------+-------------------------------+------+
+12 rows in set (0.00 sec)
+
+mysql> commit;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> create table Topic (TopicName varchar(40) ,primary key(TopicName));
+Query OK, 0 rows affected (0.06 sec)
+
+mysql> insert into Topic ('Machine learning');
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ''Machine learning')' at line 1
+mysql> insert into Topic values ('Machine learning');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into Topic values ('Ar and Vr');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into Topic values ('Artificial intelligence');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into Topic values ('Data Science');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into Topic values ('cloud computing');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> select * from Topic;
++-------------------------+
+| TopicName               |
++-------------------------+
+| Ar and Vr               |
+| Artificial intelligence |
+| cloud computing         |
+| Data Science            |
+| Machine learning        |
++-------------------------+
+5 rows in set (0.00 sec)
+
+mysql> create table Reviewer (Reviewer_Email_Address varchar(40),Feedback varchar(200),FirstName varchar(30),LastName varchar(30),Phone_Number number(10),Affiliation varchar(30),TopicName varchar(40),primary key (Reviewer_Email_Address), foreign key (TopicName) references Topic(TopicName));
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'number(10),Affiliation varchar(30),TopicName varchar(40),primary key (Reviewer_E' at line 1
+mysql> create table Reviewer (Reviewer_Email_Address varchar(40),Feedback varchar(200),FirstName varchar(30),LastName varchar(30),Phone_Number numeric(10),Affiliation varchar(30),TopicName varchar(40),primary key (Reviewer_Email_Address), foreign key (TopicName) references Topic(TopicName));
+Query OK, 0 rows affected (0.05 sec)
+
+mysql> insert into Reviewer values('reviewer1@gmail.com','Need to be improved','reviewer1','R',7671097479,'professor','Artificial intelligence');
+Query OK, 1 row affected (0.02 sec)
+
+mysql> select * from Reviewer;
++------------------------+---------------------+-----------+----------+--------------+-------------+-------------------------+
+| Reviewer_Email_Address | Feedback            | FirstName | LastName | Phone_Number | Affiliation | TopicName               |
++------------------------+---------------------+-----------+----------+--------------+-------------+-------------------------+
+| reviewer1@gmail.com    | Need to be improved | reviewer1 | R        |   7671097479 | professor   | Artificial intelligence |
++------------------------+---------------------+-----------+----------+--------------+-------------+-------------------------+
+1 row in set (0.00 sec)
+
+mysql> insert into Reviewer values('reviewer1@gmail.com','Need to be improved','reviewer1','R',7671097479,'professor','Artificial intelligence1');
+ERROR 1062 (23000): Duplicate entry 'reviewer1@gmail.com' for key 'reviewer.PRIMARY'
+mysql> insert into Reviewer values('reviewer11@gmail.com','Need to be improved','reviewer1','R',7671097479,'professor','Artificial intelligence1');
+ERROR 1452 (23000): Cannot add or update a child row: a foreign key constraint fails (`conference_review`.`reviewer`, CONSTRAINT `reviewer_ibfk_1` FOREIGN KEY (`TopicName`) REFERENCES `topic` (`TopicName`))
+mysql> insert into Reviewer values('reviewer2@gmail.com','Perfect','reviewer2','V',7671556646,'assistant professor','Data Science');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into Reviewer values('reviewer3@gmail.com','Satisfactory','reviewer3','Z',9871556646,'assistant professor','Data Science');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into Reviewer values('reviewer4@gmail.com','Good','reviewer4','A',8761556646,'Professor','Machine learning');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into Reviewer values('reviewer5@gmail.com','Poor','reviewer5','B',9761556633,'Professor','cloud computing');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> select * from Reviewer;
++------------------------+---------------------+-----------+----------+--------------+---------------------+-------------------------+
+| Reviewer_Email_Address | Feedback            | FirstName | LastName | Phone_Number | Affiliation         | TopicName               |
++------------------------+---------------------+-----------+----------+--------------+---------------------+-------------------------+
+| reviewer1@gmail.com    | Need to be improved | reviewer1 | R        |   7671097479 | professor           | Artificial intelligence |
+| reviewer2@gmail.com    | Perfect             | reviewer2 | V        |   7671556646 | assistant professor | Data Science            |
+| reviewer3@gmail.com    | Satisfactory        | reviewer3 | Z        |   9871556646 | assistant professor | Data Science            |
+| reviewer4@gmail.com    | Good                | reviewer4 | A        |   8761556646 | Professor           | Machine learning        |
+| reviewer5@gmail.com    | Poor                | reviewer5 | B        |   9761556633 | Professor           | cloud computing         |
++------------------------+---------------------+-----------+----------+--------------+---------------------+-------------------------+
+5 rows in set (0.00 sec)
+
+mysql> create table hello(gg varchar(20),gh varchar(20));
+Query OK, 0 rows affected (0.05 sec)
+
+mysql> insert into table(gg) values('jjj');
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'table(gg) values('jjj')' at line 1
+mysql> drop table hello;
+Query OK, 0 rows affected (0.04 sec)
+
+mysql> create table Review(Paper_ID int,Recomendation varchar(100),Average_Score int,Technical_Merit int,Readibility int,Originality int,Relevance int,Reviewer_Email_Address varchar(30),primary key(Paper_ID),foreign key(Reviewer_Email_Address) references Reviewer(Reviewer_Email_Address));
+Query OK, 0 rows affected (0.05 sec)
+
+mysql> insert into Review values(1234,'need to change options in login page',9,7,8,9,10,'reviewer5@gmail.com');
+Query OK, 1 row affected (0.02 sec)
+
+mysql> insert into Review values(5678,'positions of the buttons need to be in proper places',8,7,8,7,9,'reviewer4@gmail.com');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into Review values(9999,'No Recomendations',10,10,10,10,10,'reviewer1@gmail.com');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into Review values(2345,'web page designing should be',8,10,6,7,9,'reviewer2@gmail.com');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> select * from Review;
++----------+------------------------------------------------------+---------------+-----------------+-------------+-------------+-----------+------------------------+
+| Paper_ID | Recomendation                                        | Average_Score | Technical_Merit | Readibility | Originality | Relevance | Reviewer_Email_Address |
++----------+------------------------------------------------------+---------------+-----------------+-------------+-------------+-----------+------------------------+
+|     1234 | need to change options in login page                 |             9 |               7 |           8 |           9 |        10 | reviewer5@gmail.com    |
+|     2345 | web page designing should be                         |             8 |              10 |           6 |           7 |         9 | reviewer2@gmail.com    |
+|     5678 | positions of the buttons need to be in proper places |             8 |               7 |           8 |           7 |         9 | reviewer4@gmail.com    |
+|     9999 | No Recomendations                                    |            10 |              10 |          10 |          10 |        10 | reviewer1@gmail.com    |
++----------+------------------------------------------------------+---------------+-----------------+-------------+-------------+-----------+------------------------+
+4 rows in set (0.00 sec)
+
+mysql> create table Assigned(Id int,Reviewer_Email_Address varchar(40),foreign key(Id) references Paper(Id),foreign key(Reviewer_Email_Address) references Reviewer(Reviewer_Email_Address));
+Query OK, 0 rows affected (0.11 sec)
+
+mysql> insert into Assigned values(1234,'reviewer1@gmail.com');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into Assigned values(2345,'reviewer2@gmail.com');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into Assigned values(2345,'reviewer3@gmail.com');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into Assigned values(2345,'reviewer5@gmail.com');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into Assigned values(1234,'reviewer5@gmail.com');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into Assigned values(9999,'reviewer5@gmail.com');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into Assigned values(9999,'reviewer4@gmail.com');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into Assigned values(9999,'reviewer3@gmail.com');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into Assigned values(5678,'reviewer3@gmail.com');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into Assigned values(5678,'reviewer4@gmail.com');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into Assigned values(5678,'reviewer2@gmail.com');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> select * from Assigned;
++------+------------------------+
+| Id   | Reviewer_Email_Address |
++------+------------------------+
+| 1234 | reviewer1@gmail.com    |
+| 2345 | reviewer2@gmail.com    |
+| 2345 | reviewer3@gmail.com    |
+| 2345 | reviewer5@gmail.com    |
+| 1234 | reviewer5@gmail.com    |
+| 9999 | reviewer5@gmail.com    |
+| 9999 | reviewer4@gmail.com    |
+| 9999 | reviewer3@gmail.com    |
+| 5678 | reviewer3@gmail.com    |
+| 5678 | reviewer4@gmail.com    |
+| 5678 | reviewer2@gmail.com    |
++------+------------------------+
+11 rows in set (0.00 sec)
+
+mysql> select * from Author;
++-------------------------------+-------------+------------+
+| Author_Email_Address          | FirstName   | LastName   |
++-------------------------------+-------------+------------+
+| 198w1a05e3@vrsiddhartha.ac.in | Greeshmanth | Penugonda  |
+| 198w1a05f2@vrsiddhartha.ac.in | Lokesh      | Jasti      |
+| 198w1a05f5@vrsiddhartha.ac.in | Yashwanth   | Kanaparthi |
+| 198w1a05j1@vrsiddhartha.ac.in | Venkata sai | Vutukuri   |
++-------------------------------+-------------+------------+
+4 rows in set (0.01 sec)
+
+mysql> select * from Submit;
++-----------------+-------------------------------+------+
+| Submission_Date | Author_Email_Address          | Id   |
++-----------------+-------------------------------+------+
+| 2021-11-17      | 198w1a05f5@vrsiddhartha.ac.in | 1234 |
+| 2021-11-17      | 198w1a05f2@vrsiddhartha.ac.in | 1234 |
+| 2021-11-17      | 198w1a05e3@vrsiddhartha.ac.in | 1234 |
+| 2021-11-20      | 198w1a05e3@vrsiddhartha.ac.in | 2345 |
+| 2021-11-20      | 198w1a05j1@vrsiddhartha.ac.in | 2345 |
+| 2021-12-19      | 198w1a05f2@vrsiddhartha.ac.in | 5678 |
+| 2021-12-19      | 198w1a05j1@vrsiddhartha.ac.in | 5678 |
+| 2021-12-19      | 198w1a05f5@vrsiddhartha.ac.in | 5678 |
+| 2021-11-15      | 198w1a05e3@vrsiddhartha.ac.in | 9999 |
+| 2021-11-15      | 198w1a05f5@vrsiddhartha.ac.in | 9999 |
+| 2021-11-15      | 198w1a05f2@vrsiddhartha.ac.in | 9999 |
+| 2021-11-15      | 198w1a05j1@vrsiddhartha.ac.in | 9999 |
++-----------------+-------------------------------+------+
+12 rows in set (0.00 sec)
+
+mysql> select * from Paper;
++------+--------------------+------------------+-----------------------+-------------------------------+
+| Id   | Title              | Abstract         | Filename              | Author_Email_Address          |
++------+--------------------+------------------+-----------------------+-------------------------------+
+| 1234 | smart lock         | security         | smartlock.pdf         | 198w1a05f5@vrsiddhartha.ac.in |
+| 2345 | Color Detection    | Detecting colors | colordetection.pdf    | 198w1a05j1@vrsiddhartha.ac.in |
+| 5678 | wheather detection | information      | wheatherdetection.pdf | 198w1a05f2@vrsiddhartha.ac.in |
+| 9999 | Tracker and tracer | Loaction Tracer  | smartlocation.pdf     | 198w1a05e3@vrsiddhartha.ac.in |
++------+--------------------+------------------+-----------------------+-------------------------------+
+4 rows in set (0.00 sec)
+
+mysql> select * from Reviewer;
++------------------------+---------------------+-----------+----------+--------------+---------------------+-------------------------+
+| Reviewer_Email_Address | Feedback            | FirstName | LastName | Phone_Number | Affiliation         | TopicName               |
++------------------------+---------------------+-----------+----------+--------------+---------------------+-------------------------+
+| reviewer1@gmail.com    | Need to be improved | reviewer1 | R        |   7671097479 | professor           | Artificial intelligence |
+| reviewer2@gmail.com    | Perfect             | reviewer2 | V        |   7671556646 | assistant professor | Data Science            |
+| reviewer3@gmail.com    | Satisfactory        | reviewer3 | Z        |   9871556646 | assistant professor | Data Science            |
+| reviewer4@gmail.com    | Good                | reviewer4 | A        |   8761556646 | Professor           | Machine learning        |
+| reviewer5@gmail.com    | Poor                | reviewer5 | B        |   9761556633 | Professor           | cloud computing         |
++------------------------+---------------------+-----------+----------+--------------+---------------------+-------------------------+
+5 rows in set (0.00 sec)
+
+mysql> select * from Assigned;
++------+------------------------+
+| Id   | Reviewer_Email_Address |
++------+------------------------+
+| 1234 | reviewer1@gmail.com    |
+| 2345 | reviewer2@gmail.com    |
+| 2345 | reviewer3@gmail.com    |
+| 2345 | reviewer5@gmail.com    |
+| 1234 | reviewer5@gmail.com    |
+| 9999 | reviewer5@gmail.com    |
+| 9999 | reviewer4@gmail.com    |
+| 9999 | reviewer3@gmail.com    |
+| 5678 | reviewer3@gmail.com    |
+| 5678 | reviewer4@gmail.com    |
+| 5678 | reviewer2@gmail.com    |
++------+------------------------+
+11 rows in set (0.00 sec)
+
+mysql> select * from Review;
++----------+------------------------------------------------------+---------------+-----------------+-------------+-------------+-----------+------------------------+
+| Paper_ID | Recomendation                                        | Average_Score | Technical_Merit | Readibility | Originality | Relevance | Reviewer_Email_Address |
++----------+------------------------------------------------------+---------------+-----------------+-------------+-------------+-----------+------------------------+
+|     1234 | need to change options in login page                 |             9 |               7 |           8 |           9 |        10 | reviewer5@gmail.com    |
+|     2345 | web page designing should be                         |             8 |              10 |           6 |           7 |         9 | reviewer2@gmail.com    |
+|     5678 | positions of the buttons need to be in proper places |             8 |               7 |           8 |           7 |         9 | reviewer4@gmail.com    |
+|     9999 | No Recomendations                                    |            10 |              10 |          10 |          10 |        10 | reviewer1@gmail.com    |
++----------+------------------------------------------------------+---------------+-----------------+-------------+-------------+-----------+------------------------+
+4 rows in set (0.00 sec)
+
+mysql> select * from Topic;
++-------------------------+
+| TopicName               |
++-------------------------+
+| Ar and Vr               |
+| Artificial intelligence |
+| cloud computing         |
+| Data Science            |
+| Machine learning        |
++-------------------------+
+5 rows in set (0.00 sec)
+
+mysql>
